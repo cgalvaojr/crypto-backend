@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Group extends Model
+class CryptocurrencyGroup extends Model
 {
     use HasFactory;
-    protected $table = 'group';
-    protected $primaryKey = 'id';
+    protected $table = 'cryptocurrency_group';
+    protected $primaryKey = ['group_id', 'cryptocurrency_id'];
     public $timestamps = false;
     protected $fillable = [
-        "name",
+        "group_id",
+        "cryptocurrency_id",
     ];
 }
