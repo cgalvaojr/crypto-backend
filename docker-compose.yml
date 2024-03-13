@@ -1,0 +1,66 @@
+version: '4.0'
+
+services:
+  crypto-nginx:
+    image: nginx:latest
+    container_name: crypto-nginx
+    ports:
+      - '8082:80'
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/html/
+    links:
+      - crypto-php-fpm
+    networks:
+      - connect-plug
+    depends_on:
+      - crypto-php-fpm
+
+  crypto-php-fpm:
+    container_name: crypto-php-fpm
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    environment:
+      PHP_IDE_CONFIG: serverName=crypto-app
+    ports:
+      - '9001:9001'
+      - '9000:9000'
+    expose:
+      - '9000'
+    links:
+      - crypto-database
+    networks:
+      - connect-plug
+    depends_on:
+      - crypto-database
+    restart: unless-stopped
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+  crypto-database:
+    image: 'postgres:12'
+    container_name: crypto-database
+    expose:
+      - '5445'
+    ports:
+      - '5445:5432'
+    environment:
+      POSTGRES_PASSWORD: crypto@connect-plug
+      POSTGRES_USER: crypto
+      POSTGRES_DB: crypto
+    restart: unless-stopped
+    networks:
+      - connect-plug
+    volumes:
+      - crypto_database_data:/var/lib/postgresql
+
+volumes:
+  crypto_database_data:
+
+networks:
+  connect-plug:
