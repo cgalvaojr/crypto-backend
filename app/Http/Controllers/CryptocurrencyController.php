@@ -13,7 +13,7 @@ class CryptocurrencyController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([ 1 => 'funcionando a parada' ]);
     }
 
     /**
