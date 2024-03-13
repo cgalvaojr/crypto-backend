@@ -11,4 +11,4 @@ Para executar você vai precisar ter o [Docker](https://www.docker.com) instalad
 
 Em seguida entre na pasta do projeto e execute o comando `docker compose up -d`
 
-Acesso a aplicação em https://localhost:8082
+Acesse a aplicação em https://localhost:8082
