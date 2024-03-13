@@ -4,16 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCryptocurrencyRequest;
 use App\Http\Requests\UpdateCryptocurrencyRequest;
-use App\Models\Cryptocurrency;
+use Services\Cryptocurrency\Cryptocurrency as CryptocurrencyService;
 
 class CryptocurrencyController extends Controller
 {
+    public function __construct(private readonly CryptocurrencyService $cryptocurrencyService)
+    {
+        
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json([ 1 => 'funcionando a parada' ]);
+        return response()->json($this->cryptocurrencyService->fetchAll());
     }
 
     /**
