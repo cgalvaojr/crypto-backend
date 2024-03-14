@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\CryptocurrencyController;
 use App\Http\Controllers\GroupController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/cryptocurrency/{sort?}/{sortOrder?}', [CryptocurrencyController::class, 'index']);
-
-Route::post('/cryptocurrency', [CryptocurrencyController::class, 'store']);
+Route::controller(CryptocurrencyController::class)->group(function(){
+    Route::get('/cryptocurrency', 'index');
+    Route::get('/cryptocurrency/{id}', 'show');
+    Route::post('/cryptocurrency', 'store');
+});
 
 Route::get('/groups', [GroupController::class, 'index']);
 Route::get('/groups/{groupId}', [GroupController::class, 'show']);

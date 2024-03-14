@@ -4,51 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCryptocurrencyRequest;
 use App\Http\Requests\UpdateCryptocurrencyRequest;
+use Illuminate\Http\Request;
 use Services\Cryptocurrency\Cryptocurrency as CryptocurrencyService;
 
 class CryptocurrencyController extends Controller
 {
     public function __construct(private readonly CryptocurrencyService $cryptocurrencyService)
+    {}
+    
+    public function index(Request $request)
     {
-        
-    }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(?string $sort = 'name', ?string $sortOrder = 'asc')
-    {
-        return response()->json($this->cryptocurrencyService->fetchAll($sort, $sortOrder));
+        return response()->json($this->cryptocurrencyService->fetchAll($request->all()));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreCryptocurrencyRequest $request)
     {
         return response()->json($this->cryptocurrencyService->store($request->validated()));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cryptocurrency $cryptocurrency)
+    public function show(string $cryptocurrencyId)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCryptocurrencyRequest $request, Cryptocurrency $cryptocurrency)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cryptocurrency $cryptocurrency)
-    {
-        //
+        return response()->json($this->cryptocurrencyService->fetch($cryptocurrencyId));
     }
 }

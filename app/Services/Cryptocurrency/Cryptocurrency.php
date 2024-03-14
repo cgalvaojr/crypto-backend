@@ -17,13 +17,15 @@ class Cryptocurrency {
         private readonly CryptocurrencyModel $model
     ){}
 
-    public function fetchAll(string $sort, string $sortOrder): array
+    public function fetchAll(array $filters): array
     {
-
+        $filters['start'] = 1;
+        $filters['start'] = 5000;
+        
         $response = Http::acceptJson()->withHeaders([
                 'X-CMC_PRO_API_KEY' => env('COINMARKETCAP_KEY')
         ])
-        ->get(env('COINMARKETCAP_URL'), ['sort' => $sort, 'sort_dir' => $sortOrder,'start' => 1, 'limit' => 5000]);
+        ->get(env('COINMARKETCAP_URL'), $filters);
 
         return $response->json();
     }
@@ -31,5 +33,10 @@ class Cryptocurrency {
     public function store(array $criptoCurrencyData): CryptocurrencyModel
     {
         return $this->model->updateOrCreate(['name' => $criptoCurrencyData['name']], $criptoCurrencyData);
+    }
+
+    public function fetch(int $cryptocurrencyId)
+    {
+        return $this->model->find($cryptocurrencyId);
     }
 }
