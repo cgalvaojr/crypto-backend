@@ -2,26 +2,21 @@
 
 namespace Services\Cryptocurrency;
 
-use App\Http\Requests\StoreCryptocurrencyRequest;
-use App\Messages;
 use App\Models\Cryptocurrency as CryptocurrencyModel;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Http;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class Cryptocurrency {
+    const API_START_RESULT = 1;
+    const API_NUM_RESULTS = 5000;
     public function __construct(
         private readonly CryptocurrencyModel $model
     ){}
 
     public function fetchAll(array $filters): array
     {
-        $filters['start'] = 1;
-        $filters['start'] = 5000;
-        
+        $filters['start'] = self::API_START_RESULT;
+        $filters['limit'] = self::API_NUM_RESULTS;
+
         $response = Http::acceptJson()->withHeaders([
                 'X-CMC_PRO_API_KEY' => env('COINMARKETCAP_KEY')
         ])

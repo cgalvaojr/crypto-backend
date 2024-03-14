@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cryptocurrency_group', function(Blueprint $table) {
-            $table->integer('group_id')->foreign('group_id', 'group_id_fk_index')->references('id')->on('group')->onDelete('cascade');
-            $table->integer('cryptocurrency_id')->foreign('cryptocurrency_id', 'cryptocurrency_id_fk_index')->references('id')->on('cryptocurrency');
+            $table->foreignId('group_id')->references('id')->on('group')->onDelete('cascade');
+            $table->foreignId('cryptocurrency_id')->references('id')->on('cryptocurrency');
         });
     }
 

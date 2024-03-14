@@ -4,47 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
-use App\Models\Group;
+use App\Models\Group as GroupModel;
+use Services\Group\Group as GroupService;
 
 class GroupController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(private readonly GroupService $service)
+    {
+        
+    }
+
     public function index()
     {
-        //
+        return $this->service->fetchAll(); 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreGroupRequest $request)
     {
-        //
+        return response()->json($this->service->store($request->validated()));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Group $group)
+    public function show(int $groupId)
     {
-        //
+        return response()->json($this->service->fetch($groupId));
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateGroupRequest $request, Group $group)
+    public function destroy(int $groupId)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Group $group)
-    {
-        //
+        return response()->json($this->service->destroy($groupId));
     }
 }
