@@ -1,6 +1,6 @@
 ## Crypto
 
-Aplicação desenvolvida utilizando Docker, Laravel 10 e PostGreSQL.
+Aplicação desenvolvida utilizando Docker, Laravel 11 e PostGreSQL.
 
 
 ## Instruções
