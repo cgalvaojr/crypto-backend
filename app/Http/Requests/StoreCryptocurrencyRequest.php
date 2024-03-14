@@ -11,7 +11,7 @@ class StoreCryptocurrencyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class StoreCryptocurrencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|max:50',
+            'symbol' => 'required|max:20',
+            'cmc_rank' => 'required|integer',
+            'market_cap' => 'required|numeric',
+            'price' => 'required|numeric',
+            'volume_24h' => 'required|numeric',
+            'percent_change_24h' => 'required|numeric'
         ];
     }
 }

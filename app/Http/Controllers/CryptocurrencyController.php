@@ -25,7 +25,7 @@ class CryptocurrencyController extends Controller
      */
     public function store(StoreCryptocurrencyRequest $request)
     {
-        //
+        return response()->json($this->cryptocurrencyService->store($request->validated()));
     }
 
     /**

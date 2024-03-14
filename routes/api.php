@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/cryptocurrency/{sort?}/{sortOrder?}', [CryptocurrencyController::class, 'index']);
+
 Route::post('/cryptocurrency', [CryptocurrencyController::class, 'store']);
 
 Route::get('/groups', [GroupController::class, 'index']);
