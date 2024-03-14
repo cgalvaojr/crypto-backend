@@ -2,12 +2,17 @@
 
 namespace Services\Group;
 
+use App\Models\Cryptocurrency;
 use App\Models\Group as GroupModel;
+use Services\Cryptocurrency\Cryptocurrency as CryptocurrencyService;
+use App\Models\CryptocurrencyGroup as CryptocurrencyGroupModel;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Group {
     public function __construct(
-        private readonly GroupModel $model
+        private readonly GroupModel $model,
+        private readonly CryptocurrencyService $criptoService
     ){}
 
     public function fetchAll(): Collection
@@ -28,5 +33,29 @@ class Group {
     public function destroy(int $groupId)
     {
         return $this->model->find($groupId)->delete();
+    }
+
+    public function storeGroupCrypto(array $groupData)
+    {
+        $groupId = $groupData['groupId'];
+        $cryptos = $groupData['cryptos'];
+        DB::beginTransaction();
+        // $cryptoGroupModel = new CryptocurrencyGroupModel();
+
+        try {
+            foreach($cryptos as $cryptocurrency) {
+                $cryptoId = $this->criptoService->store($cryptocurrency);
+                CryptocurrencyGroupModel::create([
+                    'group_id' =>$groupId,
+                    'cryptocurrency_id' =>$cryptocurrency
+                ]);
+            }
+
+            DB::commit();
+            return $this->fetch($groupId);
+        } catch(\Exception $exception) {
+            report($exception);
+            DB::rollBack();
+        }
     }
 }

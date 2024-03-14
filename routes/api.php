@@ -14,5 +14,6 @@ Route::controller(GroupController::class)->group(function(){
     Route::get('/groups', [GroupController::class, 'index']);
     Route::get('/groups/{groupId}', [GroupController::class, 'show']);
     Route::post('/groups', [GroupController::class, 'store']);
+    Route::post('/group-crypto', [GroupController::class, 'storeGroupCrypto']);
     Route::delete('/groups/{id}', [GroupController::class, 'destroy']);
 });

@@ -9,7 +9,7 @@ class CryptocurrencyGroup extends Model
 {
     use HasFactory;
     protected $table = 'cryptocurrency_group';
-    protected $primaryKey = ['group_id', 'cryptocurrency_id'];
+    protected $primaryKey = ['group_id'];
     public $timestamps = false;
     protected $fillable = [
         "group_id",

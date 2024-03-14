@@ -39,8 +39,6 @@ COPY . .
 
 RUN composer install
 
-RUN php artisan migrate
-
 ADD docker/entrypoint.sh /
 
 RUN chmod +x /entrypoint.sh

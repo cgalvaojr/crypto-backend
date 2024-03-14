@@ -20,4 +20,9 @@ class Cryptocurrency extends Model
         'volume_24h',
         'percent_change_24h'
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGroupCryptoRequest;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
 use App\Models\Group as GroupModel;
@@ -27,11 +28,15 @@ class GroupController extends Controller
     public function show(int $groupId)
     {
         return response()->json($this->service->fetch($groupId));
-
     }
 
     public function destroy(int $groupId)
     {
         return response()->json($this->service->destroy($groupId));
+    }
+
+    public function storeGroupCrypto(StoreGroupCryptoRequest $request)
+    {
+        return response()->json($this->service->storeGroupCrypto($request->validated()));
     }
 }
