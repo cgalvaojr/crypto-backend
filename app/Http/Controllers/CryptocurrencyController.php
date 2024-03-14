@@ -15,9 +15,9 @@ class CryptocurrencyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(?string $sort = 'name', ?string $sortOrder = 'asc')
     {
-        return response()->json($this->cryptocurrencyService->fetchAll());
+        return response()->json($this->cryptocurrencyService->fetchAll($sort, $sortOrder));
     }
 
     /**
